@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8ACACC6428DE369D0000EDF9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8ACACC6328DE369D0000EDF9 /* main.cpp */; };
+		8ACACC6428DE369D0000EDF9 /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8ACACC6328DE369D0000EDF9 /* Main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,12 +23,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8A4BF79028DEB97500AA35C5 /* MulMatrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MulMatrix.cpp; sourceTree = "<group>"; };
 		8A4BF79128DECA1300AA35C5 /* B.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = B.txt; sourceTree = "<group>"; };
 		8AC6B07428DF40FB004ABC12 /* chek_valid.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = chek_valid.py; sourceTree = "<group>"; };
 		8AC6B07628DF413C004ABC12 /* Create matrixs.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = "Create matrixs.py"; sourceTree = "<group>"; };
 		8ACACC6028DE369D0000EDF9 /* PP */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PP; sourceTree = BUILT_PRODUCTS_DIR; };
-		8ACACC6328DE369D0000EDF9 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		8ACACC6328DE369D0000EDF9 /* Main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
 		8ACACC6A28DE3ABE0000EDF9 /* A.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = A.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -47,9 +46,8 @@
 			isa = PBXGroup;
 			children = (
 				8AC6B07428DF40FB004ABC12 /* chek_valid.py */,
-				8A4BF79028DEB97500AA35C5 /* MulMatrix.cpp */,
 				8AC6B07628DF413C004ABC12 /* Create matrixs.py */,
-				8ACACC6328DE369D0000EDF9 /* main.cpp */,
+				8ACACC6328DE369D0000EDF9 /* Main.cpp */,
 				8ACACC6A28DE3ABE0000EDF9 /* A.txt */,
 				8A4BF79128DECA1300AA35C5 /* B.txt */,
 				8ACACC6228DE369D0000EDF9 /* PP */,
@@ -129,7 +127,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8ACACC6428DE369D0000EDF9 /* main.cpp in Sources */,
+				8ACACC6428DE369D0000EDF9 /* Main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
