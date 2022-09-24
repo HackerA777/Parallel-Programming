@@ -85,7 +85,7 @@ int main(){
         clock_t end = clock();
         double time_work = (end - begin)/((double)CLOCKS_PER_SEC);
         std::cout << "Matrix C: \n" << c[n-1][n-1] << "\n";
-        std::cout << "Time: " << time_work;
+        std::cout << "Time: " << time_work << "\n";
 //        for (int i = 0; i < n; ++i){
 //            for (int j = 0; j < m; ++j){
 //                std::cout << c[i][j] << "\t";
