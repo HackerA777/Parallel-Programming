@@ -25,7 +25,6 @@
 /* Begin PBXFileReference section */
 		8A4BF79128DECA1300AA35C5 /* B.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = B.txt; sourceTree = "<group>"; };
 		8AC6B07428DF40FB004ABC12 /* check_valid.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = check_valid.py; sourceTree = "<group>"; };
-		8AC6B07628DF413C004ABC12 /* create matrixs.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = "create matrixs.py"; sourceTree = "<group>"; };
 		8ACACC6028DE369D0000EDF9 /* PP */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PP; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ACACC6328DE369D0000EDF9 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		8ACACC6A28DE3ABE0000EDF9 /* A.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = A.txt; sourceTree = "<group>"; };
@@ -46,7 +45,6 @@
 			isa = PBXGroup;
 			children = (
 				8AC6B07428DF40FB004ABC12 /* check_valid.py */,
-				8AC6B07628DF413C004ABC12 /* create matrixs.py */,
 				8ACACC6328DE369D0000EDF9 /* main.cpp */,
 				8ACACC6A28DE3ABE0000EDF9 /* A.txt */,
 				8A4BF79128DECA1300AA35C5 /* B.txt */,
