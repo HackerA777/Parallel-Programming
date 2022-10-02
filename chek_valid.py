@@ -37,9 +37,10 @@ def main():
     with open("/Users/artemt/Documents/Labs/PP/result.txt", "w") as file:
         for i in tqdm(range(len(matrix_A)), desc="Loding: ", ascii=False, ncols=100):
             file.write(' '.join([str(a) for a in matrix_C[i]]) + '\n')
-        file.write('\n' + "Time: " + str(end - start))
+        file.write('\n' + "Time: " + str(end - start) + "; Task scope: matrix " + str(len(matrix_A)) + "x" +
+                   str(len(matrix_B)) + ".")
         file.close()
-    print(f'Time: {end - start}')
+    print(f'Time: {end - start}; Task scope: matrix {len(matrix_A)}x{len(matrix_B)}.')
 
 
 if __name__ == '__main__':
