@@ -17,7 +17,7 @@ def calculate(A, B, key):
         return np.matmul(A, B)
 
 
-def main():
+def check():
     matrix_A = []
     matrix_B = []
     with open("/Users/artemt/Documents/Labs/PP/A.txt") as A:
@@ -28,20 +28,35 @@ def main():
         for line in B:
             matrix_B.append([int(x) for x in line.split()])
         B.close()
-
-    print(f'{matrix_A[0]}\n\n{matrix_B[0]}')
     start = perf_counter()
     matrix_C = calculate(matrix_A, matrix_B, 2)
     end = perf_counter()
-    print(f'\nMatrix result: \n{matrix_C}')
+    matrix_c = []
+    with open("/Users/artemt/Documents/Labs/PP/C.txt") as c:
+        for line in c:
+            if len(line) != 1:
+                matrix_c.append([int(c) for c in line.split()])
+            else:
+                break
+        c.close()
+    flag = True
+    for i in range(len(matrix_C)):
+        for j in range(len(matrix_C)):
+            if matrix_C[i][j] != matrix_c[i][j]:
+                flag = False
     with open("/Users/artemt/Documents/Labs/PP/result.txt", "w") as file:
         for i in tqdm(range(len(matrix_A)), desc="Loding: ", ascii=False, ncols=100):
             file.write(' '.join([str(a) for a in matrix_C[i]]) + '\n')
-        file.write('\n' + "Time: " + str(end - start) + "; Task scope: matrix " + str(len(matrix_A)) + "x" +
-                   str(len(matrix_B)) + ".")
+        if flag:
+            file.write('\n' + "Time: " + str(end - start) + "; Task scope: matrix " + str(len(matrix_A)) + "x" +
+                   str(len(matrix_B)) + ". Result successful!")
+            print(f'Time: {end - start}; Task scope: matrix {len(matrix_A)}x{len(matrix_B)}. Result successful!')
+        else:
+            file.write('\n' + "Time: " + str(end - start) + "; Task scope: matrix " + str(len(matrix_A)) + "x" +
+                       str(len(matrix_B)) + ". Result unsuccessful!")
+            print(f'Time: {end - start}; Task scope: matrix {len(matrix_A)}x{len(matrix_B)}. Result unsuccessful!')
         file.close()
-    print(f'Time: {end - start}; Task scope: matrix {len(matrix_A)}x{len(matrix_B)}.')
 
 
 if __name__ == '__main__':
-    main()
+    check()
