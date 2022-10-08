@@ -5,7 +5,7 @@
 #include <math.h>
 
 
-void T(double **y, const int n){
+void T(int **y, const int n){
     for (int i = 0; i < n; i++){
         for (int j = i; j < n; j++){
             std::swap(y[i][j], y[j][i]);
@@ -33,14 +33,14 @@ int main(){
         A.clear();
         A.seekg(0, std::ios::beg);
         int n = sqrt(count);
-        double **x, **y, **c;
-        x = new double* [n];
-        y = new double* [n];
-        c = new double* [n];
+        int **x, **y, **c;
+        x = new int* [n];
+        y = new int* [n];
+        c = new int* [n];
         for (int i = 0; i < n; ++i){
-            x[i] = new double [n];
-            y[i] = new double [n];
-            c[i] = new double [n];
+            x[i] = new int [n];
+            y[i] = new int [n];
+            c[i] = new int [n];
         }
         for (int i = 0; i < n; ++i){
             for (int j = 0; j < n; ++j){
