@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8ACACC6428DE369D0000EDF9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8ACACC6328DE369D0000EDF9 /* main.cpp */; };
+		8A56254F290317EB00DE3D08 /* libomp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A56254E290317EB00DE3D08 /* libomp.dylib */; };
+		8ACACC6428DE369D0000EDF9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8ACACC6328DE369D0000EDF9 /* main.cpp */; settings = {COMPILER_FLAGS = "-fopenmp"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		8A4BF79128DECA1300AA35C5 /* B.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = B.txt; sourceTree = "<group>"; };
+		8A56254E290317EB00DE3D08 /* libomp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libomp.dylib; path = ../../../../../usr/local/Cellar/llvm/15.0.3/lib/libomp.dylib; sourceTree = "<group>"; };
 		8AB950A128E9766F001AAA47 /* create matrixs.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = "create matrixs.py"; sourceTree = "<group>"; };
 		8AC6B07428DF40FB004ABC12 /* check_valid.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = check_valid.py; sourceTree = "<group>"; };
 		8ACACC6028DE369D0000EDF9 /* PP */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PP; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,12 +38,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A56254F290317EB00DE3D08 /* libomp.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8A56254D290317EB00DE3D08 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8A56254E290317EB00DE3D08 /* libomp.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8ACACC5728DE369D0000EDF9 = {
 			isa = PBXGroup;
 			children = (
@@ -52,6 +63,7 @@
 				8A4BF79128DECA1300AA35C5 /* B.txt */,
 				8ACACC6228DE369D0000EDF9 /* PP */,
 				8ACACC6128DE369D0000EDF9 /* Products */,
+				8A56254D290317EB00DE3D08 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -189,6 +201,8 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				"OTHER_CPLUSPLUSFLAGS[arch=*]" = "-fopenmp";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -241,6 +255,9 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				"OTHER_CPLUSPLUSFLAGS[arch=*]" = "-fopenmp";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -248,7 +265,21 @@
 		8ACACC6828DE369D0000EDF9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = /usr/local/opt/llvm/bin/clang;
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_MODULE_DEBUGGING = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_STYLE = Automatic;
+				COMPILER_INDEX_STORE_ENABLE = NO;
+				ENABLE_NS_ASSERTIONS = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = /usr/local/opt/llvm/lib/clang/15.0.3/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/libomp/15.0.3/lib;
+				OTHER_CFLAGS = "-fopenmp";
+				OTHER_CPLUSPLUSFLAGS = "-fopenmp";
+				"OTHER_CPLUSPLUSFLAGS[arch=*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -256,7 +287,20 @@
 		8ACACC6928DE369D0000EDF9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = /usr/local/opt/llvm/bin/clang;
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_MODULE_DEBUGGING = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_STYLE = Automatic;
+				COMPILER_INDEX_STORE_ENABLE = NO;
+				ENABLE_NS_ASSERTIONS = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				HEADER_SEARCH_PATHS = /usr/local/opt/llvm/lib/clang/15.0.3/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/libomp/15.0.3/lib;
+				OTHER_CFLAGS = "-fopenmp";
+				OTHER_CPLUSPLUSFLAGS = "-fopenmp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -1,8 +1,10 @@
 #include <iostream>
+#include <stdio.h>
 #include <time.h>
 #include <fstream>
 #include <stdlib.h>
 #include <math.h>
+#include <omp.h>
 
 
 void T(int **y, const int n){
@@ -23,8 +25,9 @@ int main(){
         return -1;
     }
     else{
+        double t1, t2;
         int count = 0;
-        int temp;
+        int temp, i, j, k;
         while(!A.eof()){
             A >> temp;
             count ++;
@@ -50,19 +53,19 @@ int main(){
         }
         A.close();
         B.close();
-        clock_t begin = clock();
+        t1 = omp_get_wtime();
         T(y, n);
-        for (int i = 0; i < n; ++i){
-            for (int j = 0; j < n; ++j){
+#pragma omp parallel for shared(x, y, c) private(i, j, k)
+        for (i = 0; i < n; ++i){
+            for (j = 0; j < n; ++j){
                 c[i][j] = 0;
-                for (int k = 0; k < n; ++k){
+                for (k = 0; k < n; ++k){
                     c[i][j] += x[i][k] * y[j][k];
                 }
             }
         }
-        clock_t end = clock();
-        double time_work = (end - begin)/((double)CLOCKS_PER_SEC);
-        std::cout << "Time: " << time_work << "\n";
+        t2 = omp_get_wtime();
+        std::cout << "Time: " << t2-t1 << "\n";
         for (int i = 0; i < n; ++i){
             delete [] x[i];
             delete [] y[i];
@@ -78,7 +81,7 @@ int main(){
                 }
                 C << '\n';
             }
-            C << '\n' << "Time: " << time_work << "; Task scope: matrix " << n << "x" << n << ".";
+            C << '\n' << "Time: " << t2-t1 << "; Task scope: matrix " << n << "x" << n << ".";
             C.close();
             for (int i = 0; i < n; ++i){
                 delete [] c[i];
