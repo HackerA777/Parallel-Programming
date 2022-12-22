@@ -18,7 +18,7 @@ def calculate(A, B, key):
 
 
 def check():
-    N = 2000
+    N = 1000
     matrix_A = []
     matrix_B = []
     with open("F:\\University\\ѕѕ\\MPI\\MPI\\A.txt") as A:
