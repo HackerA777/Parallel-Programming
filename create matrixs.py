@@ -1,7 +1,7 @@
 import numpy as np
 from tqdm import tqdm
 
-N = 10
+N = 2000
 try:
     matrix_A = np.random.randint(0, 50, (N, N))
     print(matrix_A)

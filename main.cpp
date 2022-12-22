@@ -1,98 +1,124 @@
 #include <iostream>
+#include <chrono>
+#include <mpi.h>
 #include <stdio.h>
-#include <time.h>
+#include <string>
 #include <fstream>
-#include <stdlib.h>
-#include <math.h>
-#include <omp.h>
 
 
-void T(int **y, const int n){
-    for (int i = 0; i < n; i++){
-        for (int j = i; j < n; j++){
-            std::swap(y[i][j], y[j][i]);
+int main(int argc, char* argv[])
+{
+    setlocale(LC_ALL, "ru");
+    double all_time = 0.0;
+    double startwtime = 0.0, endwtime;
+    MPI_Init(&argc, &argv);
+    int my_rank, proc_num;
+    MPI_Comm_size(MPI_COMM_WORLD, &proc_num);
+    MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
+    int dimension = 0, n = 0, N = 0;
+    int* x = nullptr, * y = nullptr, * matrix_result = nullptr, * y_transponse = nullptr;
+    if (my_rank == 0)
+    {
+        std::ifstream A;
+        std::ifstream B;
+        A.open("F:\\University\\ѕѕ\\MPI\\MPI\\A.txt");
+        B.open("F:\\University\\ѕѕ\\MPI\\MPI\\B.txt");
+        if (!(A.good()) && !(B.good())) {
+            std::cout << "File not found!\n";
+            return -1;
         }
-    }
-}
-
-int main(){
-    std::ifstream A;
-    std::ifstream B;
-    A.open("/Users/artemt/Documents/Labs/PP/A.txt");
-    B.open("/Users/artemt/Documents/Labs/PP/B.txt");
-    if (!(A.good()) && !(B.good())){
-        std::cout << "File not found!\n";
-        return -1;
-    }
-    else{
-        double t1, t2;
         int count = 0;
-        int temp, i, j, k;
-        while(!A.eof()){
+        int temp;
+        while (!A.eof()) {
             A >> temp;
-            count ++;
+            count++;
         }
-        std::cout << "count: " << count << "\n";
+        //std::cout << "count: " << count << "\n";
         A.clear();
         A.seekg(0, std::ios::beg);
-        int n = sqrt(count);
-        int **x, **y, **c;
-        x = new int* [n];
-        y = new int* [n];
-        c = new int* [n];
-        for (int i = 0; i < n; ++i){
-            x[i] = new int [n];
-            y[i] = new int [n];
-            c[i] = new int [n];
-        }
-        for (int i = 0; i < n; ++i){
-            for (int j = 0; j < n; ++j){
-                A >> x[i][j];
-                B >> y[i][j];
-            }
+        N = count - 1;
+        n = sqrt(count);
+        x = new int[N];
+        y = new int[N];
+        for (int i = 0; i < N; ++i) {
+            A >> x[i];
+            B >> y[i];
         }
         A.close();
         B.close();
-        t1 = omp_get_wtime();
-        T(y, n);
-#pragma omp parallel for shared(x, y, c) private(i, j, k)
-        for (i = 0; i < n; ++i){
-            for (j = 0; j < n; ++j){
-                c[i][j] = 0;
-                for (k = 0; k < n; ++k){
-                    c[i][j] += x[i][k] * y[j][k];
+        y_transponse = new int[N];
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                y_transponse[i * n + j] = y[j * n + i];
+            }
+        }
+        delete[] y;
+        y = nullptr;
+       /* for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                std::cout << x[i * n + j] << " ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                std::cout << y_transponse[i * n + j] << " ";
+            }
+            std::cout << std::endl;
+        }*/
+        startwtime = MPI_Wtime();
+        matrix_result = new int[N];
+        dimension = n;
+    }
+        MPI_Bcast(&dimension, 1, MPI_INT, 0, MPI_COMM_WORLD);
+        if (my_rank)
+        {
+            y_transponse = new int[dimension * dimension];
+        }
+        int local_size = dimension / proc_num;
+        int* local_a_part = new int[local_size * dimension];
+        int* local_result = new int[local_size * dimension];
+        MPI_Scatter(x + my_rank * dimension * local_size, dimension * local_size, MPI_INT, local_a_part, dimension * local_size, MPI_INT, 0, MPI_COMM_WORLD);
+        MPI_Bcast(y_transponse, dimension * dimension, MPI_INT, 0, MPI_COMM_WORLD);
+        for (int i = 0; i < local_size; ++i)
+        {
+            for (int j = 0; j < dimension; ++j)
+            {
+                local_result[i * dimension + j] = 0;
+                for (int k = 0; k < dimension; ++k)
+                {
+                    local_result[i * dimension + j] += local_a_part[i * dimension + k] * y_transponse[j * dimension + k];
                 }
             }
         }
-        t2 = omp_get_wtime();
-        std::cout << "Time: " << t2-t1 << "\n";
-        for (int i = 0; i < n; ++i){
-            delete [] x[i];
-            delete [] y[i];
+        MPI_Gather(local_result, local_size * dimension, MPI_INT, matrix_result, dimension * local_size, MPI_INT, 0, MPI_COMM_WORLD);
+        endwtime = MPI_Wtime();
+        if (my_rank)
+        {
+            delete[] y_transponse;
+            delete[] local_result;
+            delete[] local_a_part;
         }
+        MPI_Finalize();
         delete[] x;
-        delete [] y;
+        delete[] y_transponse;
         std::ofstream C;
-        C.open("/Users/artemt/Documents/Labs/PP/C.txt");
-        if(C.good()){
-            for(int i = 0; i < n; ++i){
-                for (int j = 0; j < n; ++j){
-                    C << c[i][j] << '\t';
+        C.open("F:\\University\\ѕѕ\\MPI\\MPI\\C.txt");
+        if (C.good()) {
+            for (int i = 0; i < n; ++i) {
+                for (int j = 0; j < n; ++j) {
+                    C << matrix_result[i * n + j] << '\t';
                 }
                 C << '\n';
             }
-            C << '\n' << "Time: " << t2-t1 << "; Task scope: matrix " << n << "x" << n << ".";
+            C << '\n' << "Time: " << (endwtime - startwtime) << "; Task scope: matrix " << n << "x" << n << ".";
             C.close();
-            for (int i = 0; i < n; ++i){
-                delete [] c[i];
-            }
-            delete [] c;
         }
-        else
-        {
-            std::cout << "Open C.txt error";
-            return -2;
-        }
+        delete[] matrix_result;
+        std::cout << "Operation successfully completed" << std::endl;
+        std::cout << "N: " << dimension << std::endl;
+        std::cout << "Number of Processes: " << proc_num << std::endl;
+        std::cout << "Time in seconds: " << (endwtime - startwtime) << std::endl;
         return 0;
-    }
 }

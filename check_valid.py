@@ -18,21 +18,34 @@ def calculate(A, B, key):
 
 
 def check():
+    N = 2000
     matrix_A = []
     matrix_B = []
-    with open("/Users/artemt/Documents/Labs/PP/A.txt") as A:
+    with open("F:\\University\\ѕѕ\\MPI\\MPI\\A.txt") as A:
         for line in A:
-            matrix_A.append([int(x) for x in line.split()])
+            temp = line.split(' ')
+        temp_m = []
+        for i in range(N):
+            for j in range(N*i, N*i+N, 1):
+                temp_m.append(int(temp[j]))
+            matrix_A.append(temp_m)
+            temp_m = []
         A.close()
-    with open("/Users/artemt/Documents/Labs/PP/B.txt") as B:
-        for line in B:
-            matrix_B.append([int(x) for x in line.split()])
+    with open("F:\\University\\ѕѕ\\MPI\\MPI\\B.txt") as B:
+        for line in A:
+            temp = line.split(' ')
+        temp_m = []
+        for i in range(N):
+            for j in range(N*i, N*i+N, 1):
+                temp_m.append(int(temp[j]))
+            matrix_B.append(temp_m)
+            temp_m = []
         B.close()
     start = perf_counter()
     matrix_C = calculate(matrix_A, matrix_B, 2)
     end = perf_counter()
     matrix_c = []
-    with open("/Users/artemt/Documents/Labs/PP/C.txt") as c:
+    with open("F:\\University\\ѕѕ\\MPI\\MPI\\C.txt") as c:
         for line in c:
             if len(line) != 1:
                 matrix_c.append([int(c) for c in line.split()])
@@ -44,7 +57,7 @@ def check():
         for j in range(len(matrix_C)):
             if matrix_C[i][j] != matrix_c[i][j]:
                 flag = False
-    with open("/Users/artemt/Documents/Labs/PP/result.txt", "w") as file:
+    with open("F:\\University\\ѕѕ\\MPI\\MPI\\result.txt", "w") as file:
         for i in tqdm(range(len(matrix_A)), desc="Loding: ", ascii=False, ncols=100):
             file.write(' '.join([str(a) for a in matrix_C[i]]) + '\n')
         if flag:
